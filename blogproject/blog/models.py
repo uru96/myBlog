@@ -34,4 +34,5 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    #objects = Post.objects()
+    objects = models.Manager()
+    published = PublishedManager()
