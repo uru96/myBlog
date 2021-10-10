@@ -2,6 +2,8 @@ from django.db import models
 # Importing timezone
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 
 # Create manager for published posts
 class PublishedManager(models.Manager):
@@ -26,6 +28,13 @@ class Post(models.Model):
     status = models.CharField(max_length=10,
                               choices=STATUS_CHOICES,
                               default='draft')
+
+    def get_absolute_url(self):
+        return reverse('blog:post_detail',
+                       args=[self.publish.year,
+                             self.publish.strftime('%m'),
+                             self.publish.strftime('%d'),
+                             self.slug])
 
     # Class consistence metadata inform Django to sort data in database in descending order
     class Meta:
