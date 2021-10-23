@@ -4,15 +4,15 @@
 
 {% block content %}
 <h1>Mój blog</h1>
-{% for posts in posts %}
+{% for post in posts %}
 <h2>
     <a href="{{ post.get_absolute_url }}">
-        {{ posts.title }}
+        {{ post.title }}
     </a>
 </h2>
 <p class="date">
-    Opublikowany {{ posts.publish }} przez {{ posts.author }}
+    Opublikowany {{ post.publish }} przez {{ post.author }}
 </p>
-{{ posts.body|truncatewords:30|linebreaks }}
+{{ post.body|truncatewords:30|linebreaks }}
 {% endfor %}
 {% endblock %}
