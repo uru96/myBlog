@@ -36,14 +36,14 @@ def post_share(request, post_id):
         if form.is_valid():
             # Veryfing post is success
             cd = form.cleaned_data
-            post_url = request.build_absolute_url(post.get_absolute_url())
-            subject = '{} ({}) Zachęca do przeczytania "{}"'.format(cd['name'], ['email'], post.title)
+            post_url = request.build_absolute_uri(post.get_absolute_url())
+            subject = '{} ({}) Zachęca do przeczytania "{}"'.format(cd['name'], cd['email'], post.title)
             message = 'Przeczytaj post "{}" na stronie {}\n \n Komentarz dodany przez {}: {} '.format(post.title,
                                                                                                       post_url,
                                                                                                       cd['name'],
                                                                                                       cd['comments'])
             send_mail(subject, message, email_from, [cd['to']])
             sent = True
-        else:
-            form = EmailPostForm()
-        return render(request, 'blog/post/share.html', {'post': post, 'form': form, 'sent': sent})
+    else:
+        form = EmailPostForm()
+    return render(request, 'blog/post/share.html', {'post': post, 'form': form, 'sent': sent})
