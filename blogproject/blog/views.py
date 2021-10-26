@@ -33,6 +33,7 @@ def post_detail(request, year, month, day, post):
             new_comment.post = post
             # Save comment in Database
             new_comment.save()
+            comment_form=CommentForm()
     else:
         comment_form = CommentForm()
 
