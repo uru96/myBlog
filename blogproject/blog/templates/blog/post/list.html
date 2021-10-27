@@ -6,9 +6,8 @@
 <h1>Mój blog</h1>
 {% for post in posts %}
 <h2>
-    <a href="{{ post.get_absolute_url }}">
-        {{ post.title }}
-    </a>
+    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+    <p class="tags">Tagi: {{ post.tags.all|join:", " }}</p>
 </h2>
 <p class="date">
     Opublikowany {{ post.publish }} przez {{ post.author }}

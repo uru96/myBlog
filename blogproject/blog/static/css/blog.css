@@ -41,6 +41,11 @@ p.date {
     font-style: italic;
 }
 
+p.tags {
+    font-size: 5px;
+    font-style: italic;
+}
+
 /* pagination */
 .pagination {
     margin:40px 0;
