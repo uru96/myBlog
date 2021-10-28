@@ -5,6 +5,7 @@ from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 from taggit.models import Tag
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Count
 
 
 # Showing posts on main page
@@ -34,7 +35,6 @@ def post_list(request, tag_slug=None):
                                                    'tag': tag})
 
 
-
 # Showing post details
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post,
@@ -59,9 +59,19 @@ def post_detail(request, year, month, day, post):
     else:
         comment_form = CommentForm()
 
+    # Get all ids from tags in post in list
+    post_tags_ids = post.tags.values_list('id', flat=True)
+
+    # Get all published posts which have the same tags, without currrent post
+    similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
+
+    # Count tags
+    similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags', '-publish')[:4]
+
     return render(request, 'blog/post/detail.html', {'post': post,
                                                      'comments': comments,
-                                                     'comment_form': comment_form})
+                                                     'comment_form': comment_form,
+                                                     'similar_posts': similar_posts})
 
 
 # Sharing posts
