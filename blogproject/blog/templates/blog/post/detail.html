@@ -13,7 +13,7 @@
 <h2>Podobne posty</h2>
 {% for post in similar_posts %}
 <p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
-{% empty %}
+{% empty %}0\
 Nie ma podobnych postów
 {% endfor %}
 {% with comments.count as total_comments %}
