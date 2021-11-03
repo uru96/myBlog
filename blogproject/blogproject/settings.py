@@ -37,6 +37,7 @@ EMAIL_USE_TLS = True
 
 # Application definition
 # Informs Django about active applications
+SITE_ID = 1
 
 INSTALLED_APPS = [
     'django.contrib.admin',
