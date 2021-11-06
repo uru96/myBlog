@@ -1,19 +1,39 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Post, Comment
 #from django.views.generic import ListView
-from .forms import EmailPostForm, CommentForm
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from .forms import EmailPostForm, CommentForm, SearchForm
 from django.core.mail import send_mail
 from taggit.models import Tag
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Count
 
 
-# Showing posts on main page
-# class PostListView(ListView):
-#     queryset = Post.published.all()
-#     context_object_name = 'posts'
-#     paginate_by = 5
-#     template_name = 'blog/post/list.html'
+def post_search(request):
+
+    # Declare form query and result variables
+    form = SearchForm()
+    query = None
+    results = []
+
+    # Conditions for query
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+
+        # Form validation
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            search_vector = SearchVector('title', weight='A') + SearchVector('body', weight='B')
+            search_query = SearchQuery(query)
+            results = Post.objects.annotate(search=search_vector, rank=SearchRank(search_vector, search_query))\
+                                  .filter(search=search_query).order_by('-rank')
+
+    return render(request, 'blog/post/search.html',
+                  {'form': form,
+                   'query': query,
+                   'results': results})
+
+
 def post_list(request, tag_slug=None):
     object_list = Post.published.all()
     tag = None
