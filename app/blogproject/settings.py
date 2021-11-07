@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-!r(=yhx61a)va5@@77hdb7yj@$f01_g89xj-oux&vriwju80&*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://djangoblogaproject.herokuapp.com/',
+ALLOWED_HOSTS = ['https://blog-django-application.herokuapp.com/',
                  'localhost',
                  '127.0.0.1']
 
@@ -140,7 +140,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticpi')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 django_heroku.settings(locals())
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
