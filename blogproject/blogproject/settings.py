@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure-!r(=yhx61a)va5@@77hdb7yj@$f01_g89xj-oux&vriwju80&*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://djangoblogaproject.herokuapp.com/',
+                 'localhost',
+                 '127.0.0.1']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = ''
