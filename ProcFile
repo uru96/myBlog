@@ -1,1 +1,1 @@
-web: gunicorn djangoblogaproject.wsgi
+web: gunicorn blog-django-application.wsgi
